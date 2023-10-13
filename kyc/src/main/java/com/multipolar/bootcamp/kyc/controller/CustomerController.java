@@ -10,6 +10,7 @@ import org.springframework.validation.FieldError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.swing.text.html.Option;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +18,6 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/customers")
-@Validated
 public class CustomerController {
 
     private final CustomerService customerService;
@@ -68,5 +68,15 @@ public class CustomerController {
     public ResponseEntity<Void> deleteCustomerById(@PathVariable String id){
         customerService.deleteCustomerById(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/nik/{nik}")
+    public Optional<Customer> getCustomerByNik(@PathVariable String nik){
+        return customerService.getCustomerByNik(nik);
+    }
+
+    @GetMapping("/name/{firstName}")
+    public List<Customer> getCustomerByFirstNameCaseInsensitive(@PathVariable String firstName){
+        return customerService.getCustomerByFirstNameCaseInsensitive(firstName);
     }
 }
